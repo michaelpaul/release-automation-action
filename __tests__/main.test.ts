@@ -19,11 +19,19 @@ test('wait 500 ms', async () => {
 
 // shows how the runner will run a javascript action with env / stdout protocol
 test('test runs', () => {
-  process.env['INPUT_MILLISECONDS'] = '500'
+  // process.env['INPUT_TOKEN'] = 'my secret token'
+  process.env['INPUT_CURRENT-VERSION'] = '1.2.3'
   const np = process.execPath
   const ip = path.join(__dirname, '..', 'lib', 'main.js')
   const options: cp.ExecFileSyncOptions = {
     env: process.env
   }
-  console.log(cp.execFileSync(np, [ip], options).toString())
+  try {
+    cp.execFileSync(np, [ip], options)
+  } catch (e: any) {
+    const stdout = e.stdout as Buffer
+    expect(stdout.toString()).toContain(
+      'Input required and not supplied: token'
+    )
+  }
 })
