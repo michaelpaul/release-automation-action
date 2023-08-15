@@ -1,11 +1,11 @@
 import * as github from '@actions/github'
 import * as core from '@actions/core'
 
-// Github GraphQL query result
 export interface Label {
   name: string
 }
 
+// Github GraphQL query result
 export interface Comparison {
   repository: {
     name: string

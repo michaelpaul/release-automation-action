@@ -1,22 +1,12 @@
-<p align="center">
-  <a href="https://github.com/actions/typescript-action/actions"><img alt="typescript-action status" src="https://github.com/actions/typescript-action/workflows/build-test/badge.svg"></a>
-</p>
+# Release Automation Action
 
-# Create a JavaScript Action using TypeScript
+<a href="https://github.com/michaelpaul/release-automation-action/actions"><img alt="status" src="https://github.com/michaelpaul/release-automation-action/workflows/build-test/badge.svg"></a>
 
-Use this template to bootstrap the creation of a TypeScript action.:rocket:
-
-This template includes compilation support, tests, a validation workflow, publishing, and versioning guidance.  
-
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
-
-## Create an action from this template
-
-Click the `Use this Template` and provide the new repo details for your action
+A GitHub action to propose the next version to release of your repository.
 
 ## Code in Main
 
-> First, you'll need to have a reasonably modern version of `node` handy. This won't work with versions older than 9, for instance.
+> First, you'll need to have a reasonably modern version of `node` handy. This won't work with versions older than 9, for instance. Consider using [Github Codespaces](https://github.com/features/codespaces) or [Gitpod](https://www.gitpod.io/).
 
 Install the dependencies  
 ```bash
@@ -39,14 +29,6 @@ $ npm test
 
 ...
 ```
-
-## Change action.yml
-
-The action.yml defines the inputs and output for your action.
-
-Update the action.yml with your name, description, inputs and outputs for your action.
-
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
 
 ## Change the Code
 
@@ -90,16 +72,12 @@ See the [versioning documentation](https://github.com/actions/toolkit/blob/maste
 
 ## Validate
 
-You can now validate the action by referencing `./` in a workflow in your repo (see [test.yml](.github/workflows/test.yml))
+This action performs an integration test by referencing `./` in a [test.yml](.github/workflows/test.yml) workflow.
 
-```yaml
-uses: ./
-with:
-  milliseconds: 1000
-```
+See the [actions tab](https://github.com/michaelpaul/release-automation-action/actions) for runs of this action! :rocket:
 
-See the [actions tab](https://github.com/actions/typescript-action/actions) for runs of this action! :rocket:
-
-## Usage:
+## Usage
 
 After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference the stable and latest V1 action
+
+Disclaimer: _This is not an officially supported Adyen product._

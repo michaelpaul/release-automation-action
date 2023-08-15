@@ -1,9 +1,8 @@
-const assert = require('node:assert/strict')
-const github = require('@actions/github')
-const core = require('@actions/core')
-
 import * as release from '../src/release'
 import {jest, describe, test, expect} from '@jest/globals'
+
+const github = require('@actions/github')
+const core = require('@actions/core')
 
 jest.mock('@actions/github')
 jest.mock('@actions/core')
@@ -106,7 +105,7 @@ const comparisonFixture: release.Comparison = {
 test('Changelog', () => {
   const changelog = release.changelog(comparisonFixture)
 
-  assert.deepEqual(changelog, ['- #10', '- #20', '- #30'])
+  expect(changelog).toStrictEqual(['- #10', '- #20', '- #30'])
 })
 
 describe('Detect changes', () => {
