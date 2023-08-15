@@ -212,6 +212,6 @@ export async function bump(): Promise<void> {
   const next = nextVersion(currentVersion, increment, preRelease)
 
   core.setOutput('increment', increment)
-  core.setOutput('nextVersion', next)
+  core.setOutput('next-version', next)
   core.setOutput('changelog', logs.join('\n'))
 }

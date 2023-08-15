@@ -236,7 +236,7 @@ function bump() {
         const increment = detectChanges(changeset);
         const next = nextVersion(currentVersion, increment, preRelease);
         core.setOutput('increment', increment);
-        core.setOutput('nextVersion', next);
+        core.setOutput('next-version', next);
         core.setOutput('changelog', logs.join('\n'));
     });
 }

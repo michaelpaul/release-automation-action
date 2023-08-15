@@ -230,5 +230,5 @@ test('Bump', async () => {
   })
   expect(core.setOutput).toHaveBeenCalledTimes(3)
   expect(core.setOutput).toHaveBeenCalledWith('increment', 'major')
-  expect(core.setOutput).toHaveBeenCalledWith('nextVersion', '2.0.0')
+  expect(core.setOutput).toHaveBeenCalledWith('next-version', '2.0.0')
 })
