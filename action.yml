@@ -1,13 +1,10 @@
-name: 'Release automation'
-description: 'Proposes next version to release'
+name: 'Release automation action'
+description: 'Prepares the next release'
 author: 'Michael Paul'
 inputs:
   token:
     description: 'GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)'
     default: ${{ github.token }}
-  current-version:
-    description: 'Latest release of the project at `develop-branch`'
-    required: true
   pre-release:
     description: 'This release will be labeled as non-production ready'
     default: false
@@ -25,5 +22,49 @@ outputs:
   changelog:
     description: 'List of merged pull requests unreleased'
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.release-branch }}
+    - name: Reset promotion branch
+      run: |
+        git fetch origin ${{ inputs.develop-branch }}:${{ inputs.develop-branch }}
+        git reset --hard ${{ inputs.develop-branch }}
+    - name: Grab current version
+      id: current-version
+      run: echo "current-version=$(cat VERSION)" >> $GITHUB_OUTPUT
+      shell: bash
+    - name: Prepare release request
+      id: release
+      uses: ./.github/actions/release-action
+      with:
+        token: ${{ inputs.token }}
+        current-version: ${{ steps.current-version.outputs.current-version }}
+        develop-branch: ${{ inputs.develop-branch }}
+        release-branch: ${{ inputs.release-branch }}
+    - name: Bump version
+      if: steps.release.outputs.next-version != steps.current-version.outputs.current-version
+      run: perl -i -pe 's/$$ENV{"CURRENT_VERSION"}/$$ENV{"NEXT_VERSION"}/' VERSION ${{ inputs.version-files }}
+      env:
+        CURRENT_VERSION: ${{steps.current-version.outputs.current-version}}
+        NEXT_VERSION: ${{steps.release.outputs.next-version}}
+    - name: Create Pull Request
+      id: cpr
+      uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5.0.2
+      with:
+        token: ${{ inputs.token }}
+        branch: automation/release
+        title: Release v${{steps.release.outputs.next-version}}
+        body: |
+          Merged pull requests to be released:
+          ${{steps.release.outputs.changelog}}
+        commit-message: "chore(release): bump to ${{steps.release.outputs.next-version}}"
+        delete-branch: true
+    - name: Enable Pull Request Automerge
+      if: steps.cpr.outputs.pull-request-operation == 'created'
+      uses: peter-evans/enable-pull-request-automerge@a660677d5469627102a1c1e11409dd063606628d # v3.0.0
+      with:
+        token: ${{ inputs.token }}
+        pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+        merge-method: merge

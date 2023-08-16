@@ -1,0 +1,29 @@
+name: 'Release automation step'
+description: 'Proposes next version to release'
+author: 'Michael Paul'
+inputs:
+  token:
+    description: 'GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)'
+    default: ${{ github.token }}
+  current-version:
+    description: 'Latest release of the project at `develop-branch`'
+    required: true
+  pre-release:
+    description: 'This release will be labeled as non-production ready'
+    default: false
+  develop-branch:
+    description: 'Branch used for development of the `current-version`'
+    default: develop
+  release-branch:
+    description: 'Branch used to publish releases of the `develop-version`'
+    default: main
+outputs:
+  increment:
+    description: 'Type of the next release (e.g. major)'
+  next-version:
+    description: 'Suggestion of which version should go out next'
+  changelog:
+    description: 'List of merged pull requests unreleased'
+runs:
+  using: 'node16'
+  main: '../../../dist/index.js'
