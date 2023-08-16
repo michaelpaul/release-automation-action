@@ -31,6 +31,7 @@ runs:
       run: |
         git fetch origin ${{ inputs.develop-branch }}:${{ inputs.develop-branch }}
         git reset --hard ${{ inputs.develop-branch }}
+      shell: bash
     - name: Grab current version
       id: current-version
       run: echo "current-version=$(cat VERSION)" >> $GITHUB_OUTPUT
@@ -43,9 +44,11 @@ runs:
         current-version: ${{ steps.current-version.outputs.current-version }}
         develop-branch: ${{ inputs.develop-branch }}
         release-branch: ${{ inputs.release-branch }}
+      shell: bash
     - name: Bump version
       if: steps.release.outputs.next-version != steps.current-version.outputs.current-version
       run: perl -i -pe 's/$$ENV{"CURRENT_VERSION"}/$$ENV{"NEXT_VERSION"}/' VERSION ${{ inputs.version-files }}
+      shell: bash
       env:
         CURRENT_VERSION: ${{steps.current-version.outputs.current-version}}
         NEXT_VERSION: ${{steps.release.outputs.next-version}}
