@@ -38,7 +38,7 @@ runs:
       shell: bash
     - name: Prepare release request
       id: release
-      uses: ./.github/actions/release-action
+      uses: michaelpaul/release-automation-action/.github/actions/release-action@composite
       with:
         token: ${{ inputs.token }}
         current-version: ${{ steps.current-version.outputs.current-version }}
