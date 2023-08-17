@@ -18,8 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./
+      - name: Integration test
+        uses: ./
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          develop-branch: main
+          pre-release: true
+          develop-branch: composite
           release-branch: main
+          version-files: README.md package.json

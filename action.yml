@@ -14,6 +14,9 @@ inputs:
   release-branch:
     description: 'Branch used to publish releases of the `develop-version`'
     default: main
+  version-files:
+    description: 'Files to bump with the new version'
+    required: false
 outputs:
   increment:
     description: 'Type of the next release (e.g. major)'
@@ -38,19 +41,14 @@ runs:
       shell: bash
     - name: Prepare release request
       id: release
-      uses: michaelpaul/release-automation-action/.github/actions/release-action@composite
-      with:
-        token: ${{ inputs.token }}
-        current-version: ${{ steps.current-version.outputs.current-version }}
-        develop-branch: ${{ inputs.develop-branch }}
-        release-branch: ${{ inputs.release-branch }}
-    - name: Bump version
-      if: steps.release.outputs.next-version != steps.current-version.outputs.current-version
-      run: perl -i -pe 's/$$ENV{"CURRENT_VERSION"}/$$ENV{"NEXT_VERSION"}/' VERSION ${{ inputs.version-files }}
+      run: node '${{ github.action_path }}/dist/index.js'
       shell: bash
       env:
-        CURRENT_VERSION: ${{steps.current-version.outputs.current-version}}
-        NEXT_VERSION: ${{steps.release.outputs.next-version}}
+        INPUT_CURRENT-VERSION: ${{ steps.current-version.outputs.current-version }}
+    - name: Bump version
+      run: |
+        perl -i -pe 's/${{steps.current-version.outputs.current-version}}/${{steps.release.outputs.next-version}}/' VERSION ${{ inputs.version-files }}
+      shell: bash
     - name: Create Pull Request
       id: cpr
       uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5.0.2
