@@ -44,8 +44,12 @@ runs:
       run: node '${{ github.action_path }}/dist/index.js'
       shell: bash
       env:
+        INPUT_TOKEN: ${{ inputs.token }}
+        INPUT_PRE-RELEASE: ${{ inputs.pre-release }}
+        INPUT_DEVELOP-BRANCH: ${{ inputs.develop-branch }}
+        INPUT_RELEASE-BRANCH: ${{ inputs.release-branch }}
         INPUT_CURRENT-VERSION: ${{ steps.current-version.outputs.current-version }}
-    - name: Bump version
+    - name: Bump
       run: |
         perl -i -pe 's/${{steps.current-version.outputs.current-version}}/${{steps.release.outputs.next-version}}/' VERSION ${{ inputs.version-files }}
       shell: bash
