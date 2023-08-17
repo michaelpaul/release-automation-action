@@ -4,7 +4,6 @@ on: # rebuild any PRs and main branch changes
   push:
     branches:
       - main
-      - composite
       - 'releases/*'
 
 jobs:
@@ -23,6 +22,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           pre-release: true
-          develop-branch: composite
-          release-branch: main
+          develop-branch: main
+          release-branch: beta
           version-files: README.md package.json
