@@ -4,6 +4,7 @@ on: # rebuild any PRs and main branch changes
   push:
     branches:
       - main
+      - composite
       - 'releases/*'
 
 jobs:
@@ -17,9 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./
+      - name: Integration test
+        uses: ./
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          current-version: 0.0.0
-          develop-branch: main
+          pre-release: true
+          develop-branch: composite
           release-branch: main
+          version-files: README.md package.json
