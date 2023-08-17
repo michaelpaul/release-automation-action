@@ -58,7 +58,7 @@ runs:
       uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5.0.2
       with:
         token: ${{ inputs.token }}
-        branch: automation/release
+        branch: promote/v${{steps.release.outputs.next-version}}/to/${{ inputs.release-branch }}
         title: Release v${{steps.release.outputs.next-version}}
         body: |
           Merged pull requests to be released:
