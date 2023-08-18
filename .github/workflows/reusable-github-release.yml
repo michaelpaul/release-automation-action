@@ -5,9 +5,11 @@ on:
     inputs:
       token:
         description: 'GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)'
+        required: false
         default: ${{ github.token }}
         type: string
-      project-name:
+      release-title:
+        description: 'Release title prefix'
         required: true
         type: string
       develop-branch:
@@ -39,7 +41,7 @@ jobs:
         run: |
           prerelease=$(node -pe "process.env.CURRENT_VERSION.includes('-') ? '--prerelease' : ''")
           gh release create "v${CURRENT_VERSION}" \
-            --title "${{ inputs.project-name }} v${CURRENT_VERSION}" \
+            --title "${{ inputs.release-title }} v${CURRENT_VERSION}" \
             --generate-notes $prerelease --target ${{ inputs.release-branch }}
       - name: Update development branch
         run: |

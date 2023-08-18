@@ -12,6 +12,6 @@ jobs:
       contents: write
     uses: ./.github/workflows/reusable-github-release.yml
     with:
-      project-name: Release Automation Action 
+      release-title: Release Automation Action 
       develop-branch: main
       release-branch: releases/v1
