@@ -228,8 +228,8 @@ function bump() {
             required: true
         });
         const preRelease = core.getInput('pre-release');
-        const base = core.getInput('develop-branch');
-        const head = core.getInput('release-branch');
+        const base = core.getInput('release-branch');
+        const head = core.getInput('develop-branch');
         const changeset = yield compareBranches(token, Object.assign(Object.assign({}, github.context.repo), { base,
             head }));
         const logs = changelog(changeset);
