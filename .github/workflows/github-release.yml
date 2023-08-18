@@ -1,0 +1,17 @@
+name: Github Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  v1:
+    permissions:
+      contents: write
+    uses: ./.github/workflows/reusable-github-release.yml
+    with:
+      project-name: Release Automation Action 
+      develop-branch: main
+      release-branch: releases/v1
