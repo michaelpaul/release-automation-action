@@ -15,3 +15,5 @@ jobs:
       release-title: Release Automation Action 
       develop-branch: main
       release-branch: releases/v1
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
