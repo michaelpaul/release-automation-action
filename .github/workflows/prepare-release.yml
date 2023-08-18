@@ -1,4 +1,4 @@
-name: 'Self-release'
+name: Prepare release
 
 on:
   push:
