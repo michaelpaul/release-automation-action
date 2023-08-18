@@ -6,15 +6,18 @@ on:
       token:
         description: 'GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)'
         default: ${{ github.token }}
+        type: string
       project-name:
         required: true
         type: string
       develop-branch:
-        description: 'Branch used for development of the `current-version`'
+        description: 'Branch used for development'
         required: true
+        type: string
       release-branch:
-        description: 'Branch used to publish releases of the `develop-version`'
+        description: 'Branch used for distribution'
         required: true
+        type: string
 
 jobs:
   publish:
