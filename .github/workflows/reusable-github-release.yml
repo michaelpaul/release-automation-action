@@ -12,7 +12,7 @@ on:
         required: true
         type: string
       develop-branch:
-        description: 'Branch used for development'
+        description: 'Branch used for development and distribution'
         required: true
         type: string
 

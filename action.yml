@@ -9,7 +9,7 @@ inputs:
     description: 'This release will be labeled as non-production ready'
     default: false
   develop-branch:
-    description: 'Branch used for development'
+    description: 'Branch used for development and distribution'
     default: develop
   version-files:
     description: 'Files to bump with the new version'

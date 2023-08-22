@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - VERSION
+    tags-ignore:
+      - v*
 
 jobs:
   candidate:
