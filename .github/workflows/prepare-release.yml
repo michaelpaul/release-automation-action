@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - VERSION
 
 jobs:
-  v1:
+  candidate:
     permissions:
       contents: write
       pull-requests: write
@@ -18,5 +20,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           develop-branch: main
-          release-branch: releases/v1
           version-files: package.json

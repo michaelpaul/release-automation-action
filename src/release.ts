@@ -199,7 +199,7 @@ export async function bump(): Promise<void> {
     required: true
   })
   const preRelease: string = core.getInput('pre-release')
-  const base: string = core.getInput('release-branch')
+  const base = `v${currentVersion}`
   const head: string = core.getInput('develop-branch')
 
   const changeset = await compareBranches(token, {
