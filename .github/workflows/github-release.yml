@@ -1,6 +1,7 @@
 name: Automatic Github release
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
