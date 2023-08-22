@@ -30,6 +30,7 @@ jobs:
         id: current-version
         run: echo "current-version=$(cat VERSION)" >> $GITHUB_OUTPUT
       - name: Create new release
+        if: false
         env:
           GH_TOKEN: ${{ secrets.token }}
           CURRENT_VERSION: ${{ steps.current-version.outputs.current-version }}
