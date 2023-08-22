@@ -24,6 +24,5 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           pre-release: true
-          develop-branch: main
-          release-branch: beta
+          develop-branch: beta
           version-files: README.md package.json
