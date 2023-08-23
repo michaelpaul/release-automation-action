@@ -12,7 +12,7 @@ on:
 
 jobs:
   candidate:
-    if: github.event.workflow_dispatch || (github.event.pull_request.merged == true && ! startsWith(github.head_ref, 'promote/'))
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged && !startsWith(github.head_ref, 'promote/'))
     permissions:
       contents: write
       pull-requests: write
