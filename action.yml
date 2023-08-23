@@ -47,6 +47,7 @@ runs:
       uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5.0.2
       with:
         token: ${{ inputs.token }}
+        base: ${{ inputs.develop-branch }}
         branch: promote/${{ inputs.develop-branch }}/to/v${{ steps.release.outputs.next-version }}
         title: Release v${{steps.release.outputs.next-version}}
         body: |
