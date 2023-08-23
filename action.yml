@@ -55,7 +55,7 @@ runs:
 
           ${{ steps.release.outputs.changelog || '- No changes from pull requests.' }}
           
-          **Full Changelog**: https://github.com/${{ github.repository }}/compare/v${{steps.current-version.outputs.current-version}}...${{ inputs.develop-branch }}
+          **Full Changelog**: https://github.com/${{ github.repository }}/compare/${{ inputs.develop-branch }}...v${{ steps.current-version.outputs.current-version }}
         commit-message: "chore(release): bump to ${{steps.release.outputs.next-version}}"
         delete-branch: true
         labels: release
