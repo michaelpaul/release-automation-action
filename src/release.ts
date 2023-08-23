@@ -9,7 +9,8 @@ export interface Label {
 export interface Comparison {
   repository: {
     name: string
-    ref: {
+    // ref is null when the current version has not been published yet
+    ref: null | {
       compare: {
         aheadBy: number
         commits: {
@@ -38,13 +39,15 @@ export interface Comparison {
 export function changelog(changeset: Comparison): string[] {
   const entries: Set<number> = new Set()
 
-  for (const {
-    node: {associatedPullRequests: prs}
-  } of changeset.repository.ref.compare.commits.edges) {
+  if (changeset.repository.ref !== null) {
     for (const {
-      node: {number: number}
-    } of prs.edges) {
-      entries.add(number)
+      node: {associatedPullRequests: prs}
+    } of changeset.repository.ref.compare.commits.edges) {
+      for (const {
+        node: {number: number}
+      } of prs.edges) {
+        entries.add(number)
+      }
     }
   }
 
@@ -159,7 +162,10 @@ export async function compareBranches(
 
 // Scan the changelog to decide what kind of release we need
 export function detectChanges(changeset: Comparison): string {
-  if (!changeset || changeset.repository.ref.compare.aheadBy < 1) {
+  if (
+    changeset.repository.ref === null ||
+    changeset.repository.ref.compare.aheadBy < 1
+  ) {
     // Nothing to release
     return ''
   }

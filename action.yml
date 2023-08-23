@@ -42,6 +42,7 @@ runs:
         perl -i -pe 's/${{steps.current-version.outputs.current-version}}/${{steps.release.outputs.next-version}}/' VERSION ${{ inputs.version-files }}
       shell: bash
     - name: Create Pull Request
+      if: steps.release.outputs.next-version != steps.current-version.outputs.current-version
       id: cpr
       uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5.0.2
       with:
