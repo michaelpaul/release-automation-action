@@ -51,9 +51,13 @@ runs:
         title: Release v${{steps.release.outputs.next-version}}
         body: |
           Merged pull requests to be released:
-          ${{steps.release.outputs.changelog}}
+
+          ${{ steps.release.outputs.changelog || '- No changes from pull requests.' }}
+          
+          **Full Changelog**: https://github.com/${{ github.repository }}/compare/v${{steps.current-version.outputs.current-version}}...${{ inputs.develop-branch }}
         commit-message: "chore(release): bump to ${{steps.release.outputs.next-version}}"
         delete-branch: true
+        labels: release
     - name: Enable Pull Request Automerge
       if: steps.cpr.outputs.pull-request-operation == 'created'
       uses: peter-evans/enable-pull-request-automerge@a660677d5469627102a1c1e11409dd063606628d # v3.0.0
